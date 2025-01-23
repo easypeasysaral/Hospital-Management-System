@@ -1,0 +1,206 @@
+// You are required to implement a simplified hospital management system in C plus plus to manage patient doctors and their appointments the system should allow adding new patients doctor scheduling appointments and viewing the details of patients doctors and Scheduled appointments
+// Add Patient
+// Add doctor
+// Schedule Appointments
+// view Patient
+// View Doctor
+// View Appointments
+// exit
+
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+int pid;
+int did;
+
+class Patient
+{
+public:
+    string name;
+    string gender;
+    int age;
+    int ID;
+    Patient(string n, string g, int a)
+    {
+        ID = pid;
+        pid++;
+        name = n;
+        gender = g;
+        age = a;
+    }
+};
+class Doctor
+{
+public:
+    string name;
+    string gender;
+    int age;
+    int ID;
+    Doctor(string n, string g, int a)
+    {
+        ID = did;
+        did++;
+        name = n;
+        gender = g;
+        age = a;
+    }
+};
+class Appointment
+{
+public:
+    int PatientID;
+    int DoctorID;
+    string date;
+    Appointment(int p, int d, string da)
+    {
+        PatientID = p;
+        DoctorID = d;
+        date = da;
+    }
+};
+vector<Patient> allPatients;
+vector<Doctor> allDoctor;
+vector<Appointment> allAppointment;
+void addPatient()
+{
+    string n, g;
+    int a;
+    cout << "Give the Patient Name : ";
+    cin >> n;
+    cout << "Give the Patient Age : ";
+    cin >> a;
+    cout << "Give the Patient Gender : ";
+    cin >> g;
+    Patient temp(n, g, a);
+    allPatients.push_back(temp);
+}
+void addDoctor()
+{
+    string n, g;
+    int a;
+    cout << "Give the Doctor Name : ";
+    cin >> n;
+    cout << "Give the Doctor Age : ";
+    cin >> a;
+    cout << "Give the Doctor Gender : ";
+    cin >> g;
+    Doctor temp(n, g, a);
+    allDoctor.push_back(temp);
+}
+bool isPatient(int id)
+{
+    bool ans = false;
+    for (int i = 0; i < allPatients.size(); i++)
+    {
+        if (allPatients[i].ID == id)
+            ans = true;
+    }
+    return ans;
+}
+bool isDoctor(int id)
+{
+    bool ans = false;
+    for (int i = 0; i < allDoctor.size(); i++)
+    {
+        if (allDoctor[i].ID == id)
+            ans = true;
+    }
+    return ans;
+}
+void ScheduleAppointment()
+{
+    int PatientID;
+    int DoctorID;
+    string date;
+    cout << "Give the Patient ID : ";
+    cin >> PatientID;
+    cout << "Give the Doctor ID : ";
+    cin >> DoctorID;
+    cout << "Give the Date in DD-MM-YYYY : ";
+    cin >> date;
+    if (isPatient(PatientID) == false || isDoctor(DoctorID) == false)
+    {
+        cout << "INVALID PATIENT ID OR DOCTOR ID" << endl;
+        cout << "Appiontment Schedule Unsuccessfull" << endl;
+        return;
+    }
+    Appointment temp(PatientID, DoctorID, date);
+    allAppointment.push_back(temp);
+}
+void viewPatient()
+{
+    for (int i = 0; i < allPatients.size(); i++)
+    {
+        cout << "Patient ID : " << allPatients[i].ID << endl;
+        cout << "Patient Name : " << allPatients[i].name << endl;
+        cout << "Patient Age : " << allPatients[i].age << endl;
+        cout << "Patient Gender : " << allPatients[i].gender << endl;
+    }
+}
+void viewDoctor()
+{
+    for (int i = 0; i < allDoctor.size(); i++)
+    {
+        cout << "Doctor ID : " << allDoctor[i].ID << endl;
+        cout << "Doctor Name : " << allDoctor[i].name << endl;
+        cout << "Doctor Age : " << allDoctor[i].age << endl;
+        cout << "Doctor Gender : " << allDoctor[i].gender << endl;
+    }
+}
+void viewScheduleAppointment()
+{
+    for (int i = 0; i < allAppointment.size(); i++)
+    {
+        cout << "Patient ID : " << allAppointment[i].PatientID << endl;
+        cout << "Doctor ID : " << allAppointment[i].DoctorID << endl;
+        cout << "Date : " << allAppointment[i].date << endl;
+    }
+}
+
+int main()
+{
+    pid = 1;
+    did = 1;
+    int choice;
+    do
+    {
+        cout << "1.Add Patient" << endl;
+        cout << "2.Add Doctor" << endl;
+        cout << "3.Schedule Appointments" << endl;
+        cout << "4.View Patient" << endl;
+        cout << "5.View Doctor" << endl;
+        cout << "6.View Appointments" << endl;
+        cout << "0.To Exit" << endl;
+        cout << "Give your Choice : ";
+        cin >> choice;
+        switch (choice)
+        {
+        case 1:
+            addPatient();
+            break;
+        case 2:
+            addDoctor();
+            break;
+        case 3:
+            ScheduleAppointment();
+            break;
+        case 4:
+            viewPatient();
+            break;
+        case 5:
+            viewDoctor();
+            break;
+        case 6:
+            viewScheduleAppointment();
+            break;
+        default:
+            cout << "INVALID CHOICE" << endl;
+            cout << endl;
+            cout << endl;
+            cout << endl;
+        }
+        cout << endl;
+
+    } while (choice != 0);
+}
